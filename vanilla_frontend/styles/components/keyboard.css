@@ -1,0 +1,27 @@
+
+.white-key-container, .black-key-container {
+  position: absolute;
+  display: flex;
+  width: 100%;
+}
+
+.white-key-container {
+  height: 100%;
+}
+
+
+.black-key-container {
+  height: 60%;
+}
+
+.black-key-container > *:nth-child(3),
+.black-key-container > *:nth-child(7)
+{
+  visibility: hidden;
+}
+
+custom-key {
+  flex:1;
+  height: 100%;
+  width: 100%;
+}

@@ -1,0 +1,93 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: var(--text-muted);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+:root {
+  --bg-dark: hsl(336 0% 1%);
+  --bg: hsl(300 0% 4%);
+  --bg-light: hsl(0 0% 9%);
+  --text: hsl(300 0% 95%);
+  --text-muted: hsl(300 0% 69%);
+  --highlight: hsl(330 0% 39%);
+  --border: hsl(0 0% 28%);
+  --border-muted: hsl(300 0% 18%);
+  --primary: hsl(173 48% 57%);
+  --secondary: hsl(346 63% 75%);
+  --danger: hsl(9 26% 64%);
+  --warning: hsl(52 19% 57%);
+  --success: hsl(146 17% 59%);
+  --info: hsl(217 28% 65%);
+}
+
+body {
+  background-color: var(--bg);
+}
+
+h1, h2, input {
+  color: var(--text)
+}
+
+h3 {
+  font-size: 1rem;
+}
+
+button {
+  border: 1px solid ;
+  background-color: var(--bg-light);
+  border-color: var(--border);
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 1.5rem;
+}
+
+button:hover a {
+  color: var(--text);
+}
+
+form, section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+form {
+  width: 20%;
+}
+
+section {
+  width: 30%;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+input, button {
+  border-radius: .25rem;
+}
+
+input {
+  height: 2rem;
+  background-color: transparent;
+  border: 1px solid var(--border);
+}
+
+a {
+  text-decoration: none;
+}
+
+hr {
+  border-color: var(--highlight);
+}

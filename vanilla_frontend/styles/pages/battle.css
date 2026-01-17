@@ -1,0 +1,75 @@
+progress {
+  width: 50%;
+  height: 3rem;
+  accent-color: rgb(153, 12, 146);
+  background-color: rgb(255, 174, 0);
+  /* border-radius: 0.5rem 0.5rem 0 0; */
+} 
+
+i {
+  color: var(--text);
+  /* height: 50%; */
+}
+
+progress::-webkit-progress-bar {
+  /* border-radius: 0.5rem 0.5rem 0 0; */
+  background-color: #f01818;
+}
+
+progress::-webkit-progress-value {
+  /* border-radius: 0.5rem 0 0 0; */
+  background-color: #12ef0e;
+}
+
+
+section.battle-header {
+  height: 10%;
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items:flex-end;
+}
+
+section.battle-header > div {
+  /* height: 100%; */
+  border: 1px solid var(--border);
+  border-radius: .5rem .5rem 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+div.score {
+  width: 15%;
+  height: 70%;
+}
+
+div.timer {
+  width: 20%;
+  height: 100%;
+}
+
+section.staff-container {
+  height: 50%;
+  width: 50%;
+  background-color: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 0 0  1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+section.staff-container img {
+  height: 90%;
+  width: auto;
+}
+
+custom-keyboard {
+  height: 25%;
+  width: 40%;
+  position: relative;
+}

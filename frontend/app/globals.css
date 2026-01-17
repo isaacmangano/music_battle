@@ -1,0 +1,41 @@
+:root {
+  /* Colours */
+--bg-dark: hsl(336 0% 1%);
+--bg: hsl(300 0% 4%);
+--bg-light: hsl(0 0% 9%);
+--text: hsl(300 0% 95%);
+--text-muted: hsl(300 0% 69%);
+--highlight: hsl(330 0% 39%);
+--border: hsl(0 0% 28%);
+--border-muted: hsl(300 0% 18%);
+--primary: hsl(220 78% 76%);
+--secondary: hsl(40 53% 60%);
+--danger: hsl(9 26% 64%);
+--warning: hsl(52 19% 57%);
+--success: hsl(146 17% 59%);
+--info: hsl(217 28% 65%);
+
+/*Sizes*/
+--border-radius-small: 3px;
+--height-medium: 40px;
+
+}
+
+body {
+  background: var(--bg-dark);
+}
+
+h1, h2, h3, p, input {
+  color: var(--text);
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+input {
+  background: var(--bg-light);
+  border-radius: var(--border-radius-small);
+  height: var(--height-medium);
+  width: 100%;
+  color: var(--text-muted);
+  border-color: var(--border-muted);
+  border: 5px;
+}

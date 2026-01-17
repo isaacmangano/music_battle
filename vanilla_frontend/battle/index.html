@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music Battle</title>
+  <link rel="stylesheet" href="../styles/globals.css">
+  <link rel="stylesheet" href="../styles/pages/battle.css">
+  <script type="module" src="../scripts/components/keyboard.js"></script>
+  <script type="module" src="../scripts/components/key.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+  <main>
+    <section class="battle-header">
+      <div class="score user-score">
+        <i class="fa fa-user fa-lg"></i>
+        <h1>3</h1>
+      </div>
+      <div class="timer">
+        <h1>27s</h1>
+      </div>
+      <div class="score opponent-score">
+        <i class="fa fa-user fa-lg"></i>
+        <h1>5</h1>
+      </div>
+    </section>
+    <progress value="40" max="100"></progress>
+    <section class="staff-container">
+      <img src="../images/placeholder_note.png" alt="">
+    </section>
+    <custom-keyboard></custom-keyboard>
+  </main>
+</body>
+</html>
