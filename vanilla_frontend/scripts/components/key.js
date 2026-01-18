@@ -7,7 +7,9 @@ class Key extends HTMLElement {
     this.attachShadow({mode: "open"})
   }
   connectedCallback() {
-    this.shadowRoot.innerHTML =    /*html*/`
+    this
+    .shadowRoot
+    .innerHTML =    /*html*/`
   <link rel="stylesheet" href="../styles/globals.css">
   <link rel="stylesheet" href="../styles/components/key.css">
   <script>
@@ -24,8 +26,10 @@ class Key extends HTMLElement {
 
     updateClassName() {
       const keyColour = this.getAttribute(KEY_COLOUR);
-      // this.shadowRoot.classList.add(`${keyColour}-key`)
-      const key = this.shadowRoot.querySelector(".key");
+      const key = 
+      this.shadowRoot
+      // document
+      .querySelector(".key");
       console.log({key})
       key.classList.add(`${keyColour}-key`);
     }
@@ -33,7 +37,10 @@ class Key extends HTMLElement {
     updateNoteName() {
       const noteName = this.getAttribute(NOTE_NAME);
       if (noteName) {
-        const label = this.shadowRoot.querySelector("h2");
+        const label = 
+        this.shadowRoot
+        // document
+        .querySelector("h2");
         label.textContent = noteName;
       }
     }

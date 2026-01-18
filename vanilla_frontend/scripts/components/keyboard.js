@@ -17,10 +17,12 @@
 class Keyboard extends HTMLElement {
   constructor() {
     super();
-    this.attachShadow({mode: "open"})
+    // this.attachShadow({mode: "open"})
   }
   connectedCallback() {
-    this.shadowRoot.innerHTML =    /*html*/`
+    this
+    // .shadowRoot
+    .innerHTML =    /*html*/`
   <link rel="stylesheet" href="../styles/globals.css">
   <link rel="stylesheet" href="../styles/components/keyboard.css">
   <script type="module" src="../scripts/components/key.js"></script>

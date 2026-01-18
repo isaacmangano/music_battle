@@ -17,7 +17,9 @@ h2 {
   color: var(--bg)
 }
 
-
+.key:hover {
+  cursor:pointer;
+}
 
 .white-key {
   background-color: var(--text);
