@@ -59,10 +59,12 @@ class Battle {
   timerElement = document.getElementById("time-remaining");
   progressBarElement = document.querySelector("progress");
   mainContainerElement = document.querySelector('main');
-  remainingTime = 60;
+  noteOnStaffElement = document.querySelector("img");
+  remainingTime = 10;
   remainingTimeIntervalId;
   constructor(note) {
-    this.currentNote = note
+    // this.currentNote = note
+    this.updateCurrentNote(note)
     console.log(this.currentNote)
     this.setTimer();
     this.renderUserScore();
@@ -83,6 +85,10 @@ class Battle {
       this.renderProgressBarValue();
     })
     console.log("current note in constructor", this.currentNote)
+  }
+  renderNoteOnStaff(note) {
+
+    
   }
 
   renderUserScore() {
@@ -149,5 +155,32 @@ class Battle {
 
   updateCurrentNote(note) {
   this.currentNote = note;
+  let imgLink;
+    switch (note) {
+      case NOTE_NAMES.C:
+        imgLink = "../images/notes/C_note.png";
+        break;
+      case NOTE_NAMES.D:
+        imgLink = "../images/notes/D_note.png";
+        break;
+      case NOTE_NAMES.E:
+        imgLink = "../images/notes/E_note.png";
+        break;
+      case NOTE_NAMES.F:
+        imgLink = "../images/notes/F_note.png";
+        break;
+      case NOTE_NAMES.G:
+        imgLink = "../images/notes/G_note.png";
+        break;
+      case NOTE_NAMES.A:
+        imgLink = "../images/notes/A_note.png";
+        break;
+      case NOTE_NAMES.B:
+        imgLink = "../images/notes/B_note.png";
+        break;
+    }
+    // temp check
+    // imgLink = "https://placehold.co/600x400"
+    this.noteOnStaffElement.setAttribute("src", imgLink)
   }
 }

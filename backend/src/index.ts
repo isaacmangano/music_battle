@@ -2,6 +2,28 @@ import express from "express"
 import { createServer } from "http";
 import { Server, Socket } from "socket.io";
 
+const NOTE_NAMES = {
+  C: "C",
+  D: "D",
+  E: "E",
+  F: "F",
+  G: "G",
+  A: "A",
+  B: "B"
+}
+
+const NOTE_NAMES_ARRAY = [
+  NOTE_NAMES.C, 
+  NOTE_NAMES.D, 
+  NOTE_NAMES.E, 
+  NOTE_NAMES.F, 
+  NOTE_NAMES.G,
+  NOTE_NAMES.A,
+  NOTE_NAMES.B
+]
+
+const getRandomNote = () => NOTE_NAMES_ARRAY[Math.round(Math.random() * 6)]
+
 type User = {
   id: string
 }
@@ -48,13 +70,13 @@ try {
       console.log({membersInRoom})
       if (membersInRoom?.size == 2) {
         // send game start event to rom with starting note
-        io.to(gameId).emit("game-start", {note: "C"})
+        io.to(gameId).emit("game-start", {note: getRandomNote()})
       }
     })
 
     socket.on("correct-guess", (gameId) => {
       io.to(gameId).emit("new-note", {
-        note: "D",
+        note: getRandomNote(),
         scorer: socket.id
       })
     })
