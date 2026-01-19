@@ -1,12 +1,14 @@
+//TODO: make an env variable
 const socket = io("http://localhost:3000");
 
+// TODO: make a base Socket class and extend for waiting room and battle
 socket.on("connect", () => {
   console.log(`my socket id is -> ${socket.id}`)
   mySocketId = socket.id
 })
 
 socket.on("disconnect", () => {
-  console.log(`scoket with id -> ${socket.id} has disconnected`)
+  console.log(`socket with id -> ${socket.id} has disconnected`)
 })
 
 socket.on("player_online", (users) => {
@@ -18,20 +20,9 @@ socket.on("player_disconnected", (users) => {
 })
 
 socket.on("battle-initiated", (gameId) => {
-  // console.log(`player1: ${players.player1} battling player2: ${players.player2}`)
-  console.log(`battle initiated with game id: ${gameId}`);
   sessionStorage.setItem("gameId", gameId);
-  
   location.href = "../battle"
 })
-
-
-class UserServer {
-  users;
-  constructor() {
-    this.users = dummyUsers;
-  }
-}
 
 class WaitingRoom {
   incomingUsers;
