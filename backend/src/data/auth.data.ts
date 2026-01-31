@@ -1,7 +1,8 @@
 import { drizzle } from 'drizzle-orm/node-postgres';
-import { usersTable } from '../db/schema.ts';
-import { and, eq } from 'drizzle-orm';
-import * as schema from "../db/schema.ts"
+import { usersTable, refreshTokensTable } from '../db/schema.ts';
+import { and, eq, gt, lt, sql } from 'drizzle-orm';
+import jwt from "jsonwebtoken"
+import * as schema from '../db/schema.ts'
   
 const db = drizzle(process.env.DATABASE_URL!, {schema});
 
@@ -15,22 +16,38 @@ export const getUserByLoginCredentials = async (username: string, password: stri
 
 }
 
-export const getUserByUsername = async (username: string): Promise<{id: number, username: string, password: string} | undefined> => {
+export const getUserByUsername = async (username: string) => {
   return await db.query.usersTable.findFirst({
     where: eq(usersTable.username, username), 
     columns: {id: true, password: true, username: true}
   })
 }
 
-export const createNewUser = async (username: string, password: string): Promise<string> => {
+export const createNewUser = async (username: string, password: string): Promise<void> => {
   // create user
 
-  const user = await db.insert(usersTable).values(
+  await db.insert(usersTable).values(
     {
       username, 
       password
     }
   )
-  console.log({user})
-  return "testAccessToken"
+}
+
+export const addRefreshTokenToDatabase = async(refreshTokenId: string, expiresAtUTC: number) => {
+  await db.insert(refreshTokensTable).values(
+    {
+      id: refreshTokenId,
+      expires_at: expiresAtUTC
+    }
+  )
+}
+
+export const getValidRefreshTokenDBRecord = async (refreshToken: string) => {
+  return await db.query.refreshTokensTable.findFirst({
+    where: and(
+      eq(refreshTokensTable.id, refreshToken),
+      gt(refreshTokensTable.expires_at, Math.floor(Date.now()/ 1000))
+    )
+  })
 }

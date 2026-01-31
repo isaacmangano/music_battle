@@ -1,9 +1,13 @@
 import type { Request, Response } from "express";
-import { createNewUser, getUserByUsername } from "./data/auth.data.ts";
+import { addRefreshTokenToDatabase, createNewUser, getUserByUsername, getValidRefreshTokenDBRecord } from "./data/auth.data.ts";
 import type { LoginInput, LoginResponse } from "./types/auth.types.ts";
 import type { ErrorResponse } from "./types/global.types.ts";
 import bcrypt from "bcryptjs";
 import express from "express"
+import jwt from "jsonwebtoken";
+import type {JwtPayload } from "jsonwebtoken";
+import {randomUUID} from "crypto"
+import { verifyAccessToken } from "./middleware.ts";
 
 export const authRouter = express.Router();
 
@@ -18,9 +22,8 @@ authRouter.post("/login", async (req: Request<any, any, LoginInput>, res: Respon
       console.log("input password: ", password)
       const match = await bcrypt.compare(password, user.password)
       if (match) {
-        res.status(200).json({
-          accessToken: "testAccessToken",
-        })
+  const tokens = await generateAccessAndRefreshTokens(username)
+        res.status(200).json(tokens)
       } else {
         res.status(404).json({
           message: "incorrect password"
@@ -56,14 +59,75 @@ authRouter.post("/signup", async (req, res) => {
   } else {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
-      const accessToken = await createNewUser(username, hashedPassword)
-      res.status(200).json({
-        accessToken
-      })
+      await createNewUser(username, hashedPassword)
+      const tokens = generateAccessAndRefreshTokens(username)
+
+      res.status(200).json(tokens)
   }
 } catch(e: any) {
     res.status(400).json({
       message: e.message || "Unknown Server Error"
     })
   }
+})
+
+const generateAccessAndRefreshTokens = async (username: string) => {
+
+  const accessToken = jwt.sign(
+    {username}, 
+    process.env.JWT_SECRET!, 
+    { expiresIn: "2m" })
+
+  const refreshToken = jwt.sign(
+    {
+      jti: randomUUID(),
+       username
+    }, 
+    process.env.JWT_SECRET!, 
+    { expiresIn: "10m" })
+
+  const decodedRefreshToken = jwt.decode(refreshToken) as JwtPayload;
+  console.log({decodedRefreshToken})
+  await addRefreshTokenToDatabase(decodedRefreshToken.jti!, decodedRefreshToken.exp!)
+
+  return {
+    accessToken, 
+    refreshToken
+  }
+}
+
+authRouter.post("/verify_refresh_token", async (req, res) => {
+  const {refreshToken, username} = req.body;
+  console.log({refreshToken})
+  const decodedRefreshToken = jwt.verify(refreshToken, process.env.JWT_SECRET!) as JwtPayload
+  if (decodedRefreshToken.username != username) {
+    res.status(400).send({
+      message: "refresh is token not for you"
+    })
+  }
+  console.log({decodedRefreshToken})
+  const refreshTokenIsValid = await getValidRefreshTokenDBRecord(decodedRefreshToken.jti!)
+  console.log({refreshTokenIsValid})
+  if (!refreshTokenIsValid) {
+    res.status(400).send({
+      message: "refresh token invalid, please login to get a new one"
+    })
+  }
+  const newAccessToken = jwt.sign({
+    username
+    },
+    process.env.JWT_SECRET!,
+    {expiresIn: "2m"}
+  )
+
+  res.status(200).send({
+    accessToken: newAccessToken
+  })
+})
+
+authRouter.get("/hello_world", verifyAccessToken, async (req, res) => {
+  res.status(200).send({
+    message: "hello world!"
+  })
+
 })

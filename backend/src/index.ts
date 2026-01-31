@@ -15,7 +15,7 @@ try {
   const socketService = new SocketService(app, PORT);
   socketService.listen();
 } catch (e: any) {
-  console.error(`unable to listen to web scket server at port 3000`);
+  console.error(`unable to listen to web socket server at port 3000`);
 }
 
 app.use(express.json())
